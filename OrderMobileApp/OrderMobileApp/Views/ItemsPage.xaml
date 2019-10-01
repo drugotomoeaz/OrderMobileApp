@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OrderMobileApp.ViewModels"
+             x:Class="OrderMobileApp.Views.ItemsPage"
+              Title="{Binding Title}"
+             x:Name="BrowseItemsPage"
+             BackgroundColor="White">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddItem_Clicked">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="add.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout Margin="0" Padding="10,10,10,10">
+        <Label Text="Client's number/name:" FontAttributes="Bold" BackgroundColor="Green" TextColor="White" Margin="0" />
+        <!--<SearchBar Placeholder="name" PlaceholderColor="Gray" BackgroundColor="Transparent" Margin="0"/>-->
+        <Picker Title="Select client" ItemsSource="{Binding Clients}" ItemDisplayBinding="{Binding Name}"/>
+
+
+        <Label Text="Products:" FontAttributes="Bold" BackgroundColor="Green" TextColor="White" Margin="0"/>
+        <ListView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadItemsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                CachingStrategy="RecycleElement"
+                ItemSelected="OnItemSelected"
+                ItemTapped="OnItemTapped"
+                Margin="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell >
+                        <Grid x:Name="SingleItem" BackgroundColor="Honeydew" Padding="0,0,0,0" HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--<Label Text="{Binding ItemId}" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="0" TextColor="Green"  VerticalOptions="Center"/>-->
+                            <Label Text="{Binding Name}" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Column="1" TextColor="Green"  VerticalOptions="Center" Margin="0"/>
+                            <Button Text="-" Grid.RowSpan="2" Grid.ColumnSpan="1" Grid.Column="5" TextColor="Green" 
+                                    Clicked="Decrease_Quantity_Clicked"  VerticalOptions="Center" Padding="0,0,0,0"  Margin="0"/>
+                            <Label Text="{Binding Quantity}" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="6" TextColor="Green"  VerticalOptions="Center"  HorizontalOptions="Center"  Margin="0"/>
+                            <Button Text="+"  Grid.RowSpan="2" Grid.ColumnSpan="1" Grid.Column="8" TextColor="Green" Clicked="Increase_Quantity_Clicked"  VerticalOptions="Center" Padding="0,0,0,0"  Margin="0"/>
+                            <!--<Stepper BindingContext="{Binding Quantity}" Increment="1" ValueChanged="Stepper_ValueChanged" Grid.Column="5" 
+                                     Grid.ColumnSpan="1" Value="{Binding Quantity}" WidthRequest="5" HeightRequest="5"/>-->
+                            <Label Text="{Binding Measure}" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="9" TextColor="Green"  VerticalOptions="Center"  Margin="0"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
