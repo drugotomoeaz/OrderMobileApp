@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OrderMobileApp.Services
 {
-    public interface IDataBase: IDataStore<Item>, IClientDbOperations<Client>
+    public interface IDataBase: IDataStore<Item>, IClientDbOperator<Client>, IDistributorDbOperator<Distributor>
     {
     }
 }

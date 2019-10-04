@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Xamarin.Forms;
 
 namespace OrderMobileApp.Services
 {
@@ -15,14 +16,13 @@ namespace OrderMobileApp.Services
 
     public static class DataRequester
     {
-        private const string _productsAddress = "http://localhost:5001/products/";
-        private const string _clientAddress = "";
+        private readonly static AddressBook _addressSource = DependencyService.Get<IConfig>().GetAddressBook();
 
         private static Dictionary<RequestTo, string> _addressBook = new Dictionary<RequestTo, string>()
         {
-            { RequestTo.GetClients , "http://localhost:5001/clients/" },
-            { RequestTo.GetProducts , "http://localhost:5001/products/" },
-            { RequestTo.SendOrder , "http://localhost:5001/order/" },
+            { RequestTo.GetClients , _addressSource.AddressToGetClients },
+            { RequestTo.GetProducts , _addressSource.AddressToGetProducts },
+            { RequestTo.SendOrder , _addressSource.AddressToSendOrder },
         };
 
         public static string MakeRequest(RequestTo recipient, string requestBody)

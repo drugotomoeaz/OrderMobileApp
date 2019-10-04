@@ -11,21 +11,20 @@ using System.Linq;
 using Xamarin.Forms.Internals;
 using System.Windows.Input;
 using System.Collections.Generic;
+using OrderMobileApp.Services;
 
 namespace OrderMobileApp.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class OrderViewModel : BaseViewModel
     {
         public List<Client> Clients { get; set; }
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public OrderViewModel()
         {
             Title = "New order";
-            Clients = new List<Client> { new Client { Name= "firstClient" },
-                new Client { Name = "secondClient" },
-            new Client { Name= "thirdClient" },};
+            Clients =  DataStore.GetClientsAsync().Result.ToList();
 
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -49,6 +48,13 @@ namespace OrderMobileApp.ViewModels
                 var newItem = item as Item;
                 await DataStore.DeleteItemAsync(newItem.Id);
                 LoadItemsCommand.Execute(null);
+            });
+
+            MessagingCenter.Subscribe<LogInPage, Distributor>(this, "LogIn", async (obj, dist) =>
+            {
+                var newDistibutor = dist as Distributor;
+                await DataStore.AddDistributorAsync(newDistibutor);
+                DataTransformer.SaveClientsToDB(DataRequester.MakeRequest(RequestTo.GetClients, newDistibutor.DistributorId.ToString()));
             });
         }
 

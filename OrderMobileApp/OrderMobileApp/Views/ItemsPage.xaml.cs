@@ -17,13 +17,17 @@ namespace OrderMobileApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemsPage : ContentPage
     {
-        ItemsViewModel viewModel;
+        OrderViewModel viewModel;
 
         public ItemsPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ItemsViewModel();
+            BindingContext = viewModel = new OrderViewModel();
+            if(viewModel.Clients.Count == 0)
+            {
+                DisplayAlert("Alert", "Please log in or check your id!", "cancel");
+            }
         }
 
 
@@ -56,6 +60,10 @@ namespace OrderMobileApp.Views
             await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
         }
 
+        async void SendOrder_Clicked(object sender, EventArgs e)
+        {
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -79,12 +87,5 @@ namespace OrderMobileApp.Views
             item.Quantity++;
             MessagingCenter.Send(this, "QuantityChanged", item);
         }
-
-        //private void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
-        //{
-        //    var label = (Label)sender;
-        //    var item = (Item)label.Parent.BindingContext;
-        //    MessagingCenter.Send(this, "DeleteItem", item);
-        //}
     }
 }

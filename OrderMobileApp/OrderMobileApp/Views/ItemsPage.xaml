@@ -2,10 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:OrderMobileApp.ViewModels"
+             
              x:Class="OrderMobileApp.Views.ItemsPage"
               Title="{Binding Title}"
              x:Name="BrowseItemsPage"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             >
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked">
@@ -18,10 +20,11 @@
     </ContentPage.ToolbarItems>
 
 
+
     <StackLayout Margin="0" Padding="10,10,10,10">
         <Label Text="Client's number/name:" FontAttributes="Bold" BackgroundColor="Green" TextColor="White" Margin="0" />
         <!--<SearchBar Placeholder="name" PlaceholderColor="Gray" BackgroundColor="Transparent" Margin="0"/>-->
-        <Picker Title="Select client" ItemsSource="{Binding Clients}" ItemDisplayBinding="{Binding Name}"/>
+        <Picker Title="Select client" ItemsSource="{Binding Clients}" ItemDisplayBinding="{Binding NameEN}"/>
 
 
         <Label Text="Products:" FontAttributes="Bold" BackgroundColor="Green" TextColor="White" Margin="0"/>
@@ -61,5 +64,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Text="Send"  HorizontalOptions="CenterAndExpand" VerticalOptions="End" Clicked="SendOrder_Clicked"/>
     </StackLayout>
 </ContentPage>

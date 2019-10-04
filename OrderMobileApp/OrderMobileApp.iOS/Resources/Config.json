@@ -1,0 +1,5 @@
+﻿{
+  "AddressToGetClients": "http://localhost:5001/clients/",
+  "AddressToGetProducts": "http://localhost:5001/products/",
+  "AddressToSendOrder": "http://localhost:5001/order/"
+}

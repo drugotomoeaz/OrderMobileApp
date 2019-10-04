@@ -1,0 +1,5 @@
+﻿{
+  "AddressToGetClients": "http://93.123.90.251:5001/clients/",
+  "AddressToGetProducts": "http://93.123.90.251:5001/products/",
+  "AddressToSendOrder": "http://93.123.90.251:5001/order/"
+}

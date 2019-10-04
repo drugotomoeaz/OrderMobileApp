@@ -9,8 +9,8 @@ namespace OrderMobileApp.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string Name { get; set; }
-        //public string ClientId { get; set; }
+        public string NameBG { get; set; }
+        public string NameEN { get; set; }
         public int Bulstat { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }

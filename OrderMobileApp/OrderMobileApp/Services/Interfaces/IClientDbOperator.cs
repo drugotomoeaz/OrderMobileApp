@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace OrderMobileApp.Services
 {
-    public interface IClientDbOperations<Client>
+    public interface IClientDbOperator<Client>
     {
+        Task<bool> AddClientAsync(Client client);
         Task<bool> InsertClientsAsync(Client[] item);
         Task<Client> GetClientAsync(int id);
         Task<IEnumerable<Client>> GetClientsAsync(bool forceRefresh = false);

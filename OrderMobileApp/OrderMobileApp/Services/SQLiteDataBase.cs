@@ -18,6 +18,7 @@ namespace OrderMobileApp.Services
             _connection = DependencyService.Get<ISQLite>().GetConnection();
             _connection.CreateTable<Item>();
             _connection.CreateTable<Client>();
+            _connection.CreateTable<Distributor>();
 
         }
 
@@ -65,6 +66,23 @@ namespace OrderMobileApp.Services
         {
             return await Task.FromResult((from t in _connection.Table<Client>()
                                           select t).ToList());
+        }
+
+        public async Task<bool> AddClientAsync(Client client)
+        {
+            _connection.Insert(client);
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> AddDistributorAsync(Distributor distributor)
+        {
+            _connection.InsertOrReplace(distributor);
+            return await Task.FromResult(true);
+        }
+
+        public async Task<Distributor> GetDistributorAsync(int id = 0)
+        {
+            return await Task.FromResult(_connection.Get<Distributor>(id));
         }
     }
 }
